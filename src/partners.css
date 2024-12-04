@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* LogoList.css */
 .partner1 {
     padding: 0 5rem;
@@ -112,3 +113,119 @@ button {
 button:hover {
     background-color: #0056b3;
 } */
+=======
+/* LogoList.css */
+.partner1 {
+    padding: 0 5rem;
+    margin-bottom: 40px;
+}
+.logo-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns on large screens */
+    gap: 20px;
+    padding: 5px 15px;
+    background-color: #fff; /* Light gray background */
+    justify-items: center;
+    align-items: center;
+    text-align: center !important;
+    width: 700px;
+    box-shadow: 3px 3px 13px rgba(0, 0, 0, 0.3);
+}
+
+
+.logo-item img {
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Set a suitable width for logos */
+    height: auto;
+}
+
+
+@media (max-width: 800px) {
+    .partner1 {
+        padding: 0 1rem;
+    }
+    .logo-list {
+        width: 570px;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .logo-item img {
+        width: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .xyz {
+       font-size: 16px !important;
+    }
+    .partner1 {
+        padding: 0 1rem;
+    }
+    .logo-list {
+        width: 420px;
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .logo-item img {
+        width: 60px;
+    }
+}
+
+
+@media (max-width: 450px) {
+    .partner1 {
+        padding: 0 1rem;
+    }
+    .logo-list {
+        width: 300px;
+        gap: 5px;
+    }
+
+    .logo-item img {
+        width: 60px;
+    }
+}
+
+/* Medium screens: 2 columns */
+/* @media (max-width: 400px) {
+    .logo-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 40px;
+        width: 200px;
+    }
+} */
+
+
+
+/* Small screens: 1 column */
+@media (max-width: 0px) {
+    .logo-list {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+    }
+}
+
+
+/* PhotoUploadForm.css */
+
+/* input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+} */
+>>>>>>> 3bef7d0602299174eddd921b0478b376730d8b4b
