@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/gob.registro.es/static/css/main.60b961bf.css",
+    "main.js": "/gob.registro.es/static/js/main.a1bd3aef.js",
+    "static/media/MCIU_header.svg": "/gob.registro.es/static/media/MCIU_header.dc2a0b46241a2d5535c2249398cd5fac.svg",
+    "static/media/logo32.png": "/gob.registro.es/static/media/logo32.c902035d54e9d0e20519.png",
+    "index.html": "/gob.registro.es/index.html",
+    "main.60b961bf.css.map": "/gob.registro.es/static/css/main.60b961bf.css.map",
+    "main.a1bd3aef.js.map": "/gob.registro.es/static/js/main.a1bd3aef.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.60b961bf.css",
+    "static/js/main.a1bd3aef.js"
+  ]
+}
