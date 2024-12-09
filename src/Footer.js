@@ -3,24 +3,25 @@ import React from 'react';
 
 const Footer = () => {
     const navbarStyle = {
-        backgroundColor: '#6E042C',
-        color: '#DEEEFF'
+        backgroundColor: '#ECECE2',
+        color: '#494946',
+        borderTop: "3px solid #836501",
       };
   return (
     <footer className="pt-4 pb-0 mt-4" style={navbarStyle}>
       <div className="container">
         <div className="row">
           <div className="col-md-12 text-center">
-            <h4 className='text-uppercase text-light fw-semibold' style={{color: 'white'}}>Australian Research Council (ARC)</h4>
+            <h4 className='text-uppercase text-dark fw-semibold' style={{color: 'white'}}>Ministerio de Ciencia, Innovación y Universidades</h4>
             <br />
             <h6>
-            ABN 35 201 451 156
+            2 Manuel Cortina. 28071 - Madrid. España
               <br />
               <br />
-              Connect With ARC  |   Privacy & Security Statement
+              Conéctese con el gob | Declaración de Privacidad y Seguridad
             </h6>
             <p>
-              © 2024 Australian Research Council. All Rights Reserved.
+            © 2024 Todos los Derechos Reservados.
             </p>
           </div>
         </div>

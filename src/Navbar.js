@@ -1,6 +1,6 @@
 // src/components/Navbar.js
 import React from 'react';
-import img1 from "./img/logo222.jpg"
+import img1 from "./img/MCIU_header.svg"
 // import './partners.css';
    
 
@@ -10,9 +10,9 @@ const Navbar = () => {
     //   };
 
     const navbarStyle = {
-      backgroundColor: 'white',
+      backgroundColor: '#FFDB00',
       color: "white",
-      borderBottom: "2px solid #005A7A",
+      borderBottom: "4px solid #AD1519",
 
       
     };
@@ -23,7 +23,7 @@ const Navbar = () => {
         <div className="container">
           <a className="navbar-brand" href="#">
           <div>
-            <img src={img1} width={400} height={50} alt="ARC Logo" class="img-fluid img11" />
+            <img src={img1} width={400} height={30} alt="gob Logo" class="img-fluid img11" />
             {/* <span class="text-uppercase fw-bold fs-5 mx-4 xyz" style={{color: '#ffffff'}}>U.S. Department of Labor</span> */}
           </div>
           </a>

