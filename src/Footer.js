@@ -21,7 +21,7 @@ const Footer = () => {
               Conéctese con el gob | Declaración de Privacidad y Seguridad
             </h6>
             <p>
-            © 2024 Todos los Derechos Reservados.
+            © 2025 Todos los Derechos Reservados.
             </p>
           </div>
         </div>

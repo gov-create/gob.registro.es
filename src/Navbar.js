@@ -3,7 +3,7 @@ import React from 'react';
 import img1 from "./img/MCIU_header.svg"
 // import './partners.css';
    
-
+  
 const Navbar = () => {
     // const navbarStyle = {
     //     backgroundColor: '#ffffff',
